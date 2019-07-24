@@ -1,0 +1,57 @@
+ -- install pre-requisite  epl/remi --
+ 
+ # rpm -Uvh http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm
+ # rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
+ 
+ -- install httpd -- apache web server --
+ 
+ # yum --enablerepo=epel,remi install httpd
+ 
+ -- start httpd service & add with server startup --
+ 
+ # systemctl enable httpd.service
+ # systemctl start httpd.service
+ 
+ -- install mysql server 8 --
+ 
+ # rpm -Uvh  https://repo.mysql.com/mysql80-community-release-el7-1.noarch.rpm
+ # yum install mysql-server
+ 
+ -- start mysqld service & add with server startup --
+ 
+# systemctl enable mysqld.service
+# systemctl start mysqld.service
+
+-- secure mysql --
+
+# mysql_secure_installation [It bring available option to set root password and other access roles]
+
+-- install php 7.3 --
+
+# yum --enablerepo=epel,remi-php73 install php
+
+-- install php modules --
+
+# yum --enablerepo=remi-php73 install php-mysql php-xml php-xmlrpc php-soap php-gd
+
+-- restart httpd service --
+# systemctl restart httpd.service
+
+-- allow port in server --
+
+# firewall-cmd --permanent --zone=public --add-service=http
+# firewall-cmd --permanent --zone=public --add-service=https
+# firewall-cmd --reload
+
+--check httpd install --
+
+# httpd -v
+
+--check mysql install --
+
+# mysql -V
+
+-- check php install --
+
+# php -v
+
